@@ -34,6 +34,10 @@ module Rack
 
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
 
+      if host =~ /heroku\./
+        host = host.gsub /\.heroku/, ""
+      end
+
       path = env["PATH_INFO"]
 
       query_string = ""

@@ -113,4 +113,10 @@ class TestWWW < ActiveSupport::TestCase
     assert_equal "http://example.com/path/1?param=test", last_response.headers['Location']
   end
 
+  test 'should remove heroku from the host' do
+    self.app = Rack::WWW.new(default_app, :redirect => true, :subdomain => "secure")
+    get 'http://example.heroku.com'
+    assert_equal 'http://secure.example.com/', last_response.headers['Location']
+  end
+
 end

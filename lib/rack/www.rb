@@ -18,6 +18,7 @@ module Rack
         @app.call(env)
       else
         url = prepare_url(env)
+        puts "redirecting to #{url}"
         headers = {"Content-Type" => "text/html", "location" => url}
         [301, headers, @message || ""]
       end
@@ -34,8 +35,8 @@ module Rack
 
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
 
-      if host =~ /heroku\./
-        host = host.gsub /\.heroku/, ""
+      if host =~ /herokuapp\./
+        host = host.gsub /\.herokuapp/, ""
       end
 
       path = env["PATH_INFO"]
